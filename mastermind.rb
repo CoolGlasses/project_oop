@@ -9,7 +9,26 @@ class Mastermind
         @board.print_board 
     end
 
-    def feedback
+    def feedback(guess, secret_code, tries_left = 12)
+        colors_correct = 0
+        positions_correct = 0
+
+        guess.each_with_index do |color, i|
+            if secret_code[i] = color
+                colors_correct += 1
+                positions_correct += 1
+            elsif secret_code.include?(color)
+                colors_correct += 1
+            end
+        end
+        
+        if tries_left == 12
+            puts "You have no Feedback yet!"
+        else
+            puts "You got #{colors_correct} of the correct Colors!"
+            puts "AND"
+            puts "You got #{positions_correct} of those colors in the correct Position!"
+        end
     end
     
     def gameOver(guess, secret_code, tries_left = 1)
@@ -17,6 +36,9 @@ class Mastermind
             puts "You WIN!  You're a Mastermind!"
         elsif tries_left == 0
             puts "Gameover!  You lose!"
+            feedback(guess, secret_code)
+            puts
+            puts "BUT! My Secret Code was: #{@board.board}"
         else
             false
         end
@@ -24,21 +46,22 @@ class Mastermind
 
     def play 
         tries_left = 12
-        puts "I have my secret code!"
+        puts "I have my secret code! Think you can guess what it is?"
         
 
         while tries_left > 0
-            puts  @board.print_board
-            puts "You have #{tries_left} guesses.  Whats my code?"
+            puts @board.print_potential_colors
+            puts
+            puts "You have #{tries_left} guesses remaining.  Whats my code?"
             puts
             
-            if !gameOver(@player.guess(), @board.board, tries_left)
+            if !gameOver(@player.guess, @board.board, tries_left)
                 puts "That isn't exactly correct!"
-                puts @board.print_board
+                feedback(@player.guess, @board.board, tries_left)
             else
-                gameOver(@player.guess(), @board.board, tries_left)
+                gameOver(@player.guess, @board.board, tries_left)
             end
-            
+
             tries_left -=1
         end    
     end
@@ -81,8 +104,7 @@ end
 class Board
     def initialize
         @potential_colors = ["Red", "Blue", "Green", "Yellow", "Purple", "Orange"]
-        @board = generate_secret_code()
-        #@feedback = 
+        generate_secret_code()
     end
 
     def generate_secret_code
@@ -90,13 +112,11 @@ class Board
         @color2 = @potential_colors.sample
         @color3 = @potential_colors.sample
         @color4 = @potential_colors.sample
-        return [ @color1, @color2, @color3, @color4 ]
+        @board = [ @color1, @color2, @color3, @color4 ]
     end
 
-    def print_board
+    def print_potential_colors
         print "The potential colors are #{@potential_colors}"
-        print @board
-        #puts @feedback
     end
 
     def board
