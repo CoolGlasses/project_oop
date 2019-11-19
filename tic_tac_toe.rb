@@ -132,10 +132,26 @@ class Player
         puts
         puts "Player #{number}, what is your name?"
         @name = gets.chomp
+
         if symbol == nil
             puts
             puts "Which symbol do you want, X or O?"
             @symbol = gets.chomp
+
+                error_free = false
+
+                while !error_free
+                    if @symbol != "X" && @symbol != "O"
+                        puts
+                        puts "Invalid Symbol!  Please pick again!"
+                        puts
+                        puts "Which symbol do you want, X or O?"
+                        @symbol = gets.chomp
+                    else
+                        error_free = true
+                    end
+                end
+
         elsif symbol == "X"
             @symbol = "O"
             puts
