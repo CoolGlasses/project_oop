@@ -1,8 +1,8 @@
 class TicTacToe
     
     def initialize()
-        @player1 = Player.new()
-        @player2 = Player.new(@player1.symbol)
+        @player1 = Player.new(1)
+        @player2 = Player.new(2, @player1.symbol)
         @board = Board.new
         play()
     end
@@ -91,8 +91,9 @@ end
 
 class Player
 
-    def initialize(symbol = nil)
-        puts "What is your name?"
+    def initialize(number, symbol = nil)
+        @player_number = number
+        puts "Player #{number}, what is your name?"
         @name = gets.chomp
         if symbol == nil
             puts "Which symbol do you want, X or O?"
@@ -110,6 +111,10 @@ class Player
 
     def name
         @name
+    end
+
+    def number
+        @player_number
     end
 end
 
