@@ -266,4 +266,6 @@ class Board
     
 end
 
+
+##This starts the game when the file is run initially
 TicTacToe.new()
