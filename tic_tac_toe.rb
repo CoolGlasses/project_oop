@@ -4,28 +4,85 @@ class TicTacToe
         @player1 = Player.new()
         @player2 = Player.new(@player1.symbol)
         @board = Board.new
-        round()
+        play()
     end
 
-    def gameOver(board)
-        
-    end
+    def gameOver(player, tie = false)
+        if tie == true
+            puts "Gameover!  No more available moves, this game ends in a tie!"
+        else
+            puts "#{player.name} wins!  Gameover!"
+        end
 
-    def result
+        puts "New game(Y/N)?"
+        start = gets.chomp
+
+        if start == "Y"
+            TicTacToe.new()
+        end
     end
 
     def board
-        
+        @board.print_board
     end
 
     def victory
+        row_one = @board[0].join
+        row_two = @board[1].join
+        row_three = @board[2].join
+        column_one = @board[0][0] + @board[1][0] + @board[2][0]
+        column_two = @board[0][1] + @board[1][1] + @board[2][1]
+        column_three = @board[0][2] + @board[1][2] + @board[2][2]
+        diagonal_one = @board[0][0] + @board[1][1] + @board[2][2]
+        diagonal_two = @board[0][2] + @board[1][1] + @board[2][0]
+
+        x_wins = "XXX"
+        o_wins = "OOO"
+
+        conditions = []
+        conditions << row_one
+        conditions << row_two
+        conditions << row_three
+        conditions << column_three
+        conditions << column_two
+        conditions << column_one
+        conditions << diagonal_one
+        conditions << diagonal_two
+
+        conditions.each do |condition|
+            if condition == x_wins
+                return "X"
+            elsif condition == y_wins
+                return "O"
+            end
+        end
+        return false
     end
 
-    def round
-        puts "#{@player1} it's your turn.  Choose a location to place your symbol: "
-        player1_move = gets.chomp
-        @board.move(player1_move, @player1.symbol)
+    def play
 
+        whose_turn = @player1
+        rounds = 1
+        
+        while !victory()
+        
+        board()
+        puts "#{whose_turn} it's your turn.  Choose a location to place your symbol: "
+        move = gets.chomp
+        @board.move(move, whose_turn.symbol)
+        whose_turn = @player2
+        rounds += 1
+        end
+
+
+        if victory() == @player1.symbol
+            gameOver(@player1)
+        elsif victory() == @player2.symbol
+            gameOver(@player2)
+        elsif victory() == false && rounds == 9
+            tie = true
+            gameOver(@player1, tie)
+        end
 
     end
 
@@ -94,9 +151,14 @@ class Board
     end
 
     def print_board
-        puts @board[0]
-        puts @board[1]
-        puts @board[2]
+        print @board[0]
+        puts
+        print @board[1]
+        puts
+        print @board[2]
+        puts "------"
     end
     
 end
+
+TicTacToe.new()
