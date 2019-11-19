@@ -31,6 +31,7 @@ class TicTacToe
     end
 
     def victory
+        unpicked = "123456789"
         board = @board.board
         row_one = board[0].join
         row_two = board[1].join
@@ -61,7 +62,22 @@ class TicTacToe
                 return "O"
             end
         end
-        return false
+
+        tie = true
+
+        conditions.each do |condition|
+            condition.each_char do |char|
+                if unpicked.include?(char)
+                    tie = false
+                end
+            end
+        end
+
+        if tie == true
+            return "tie"
+        else
+            return false
+        end
     end
 
     def play
@@ -99,7 +115,7 @@ class TicTacToe
             gameOver(@player1)
         elsif victory() == @player2.symbol
             gameOver(@player2)
-        elsif victory() == false && rounds == 9
+        elsif victory() == "tie"
             tie = true
             gameOver(@player1, tie)
         end
