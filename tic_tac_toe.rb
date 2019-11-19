@@ -193,23 +193,59 @@ class Board
 
         case player_move
             when "1"
-                @board[0][0] = symbol
+                if @board[0][0] != "1"
+                    return false
+                else
+                    @board[0][0] = symbol
+                end
             when "2"
-                @board[0][1] = symbol
+                if @board[0][1] != "2"
+                    return false
+                else
+                    @board[0][1] = symbol
+                end
             when "3"
-                @board[0][2] = symbol
+                if @board[0][2] != "3"
+                    return false
+                else
+                    @board[0][2] = symbol
+                end
             when "4"
-                @board[1][0] = symbol
+                if @board[1][0] != "4"
+                    return false
+                else
+                    @board[1][0] = symbol
+                end
             when "5"
-                @board[1][1] = symbol
+                if @board[1][1] != "5"
+                    return false
+                else
+                    @board[1][1] = symbol
+                end
             when "6"
-                @board[1][2] = symbol
+                if @board[1][2] != "6"
+                    return false
+                else
+                    @board[1][2] = symbol
+                end
             when "7"
-                @board[2][0] = symbol
+                if @board[2][0] != "7"
+                    return false
+                else
+                    @board[2][0] = symbol
+                end
             when "8"
-                @board[2][1] = symbol
+                if @board[2][1] != "8"
+                    return false
+                else
+                    @board[2][1] = symbol
+                end
             when "9"
-                @board[2][2] = symbol
+                if @board[2][2] != "9"
+                    return false
+                else
+                    @board[2][2] = symbol
+                end
             else
                 return false
         end
