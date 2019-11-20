@@ -1,2 +1,2 @@
 # project_oop
-This is the Repo for Project Opp with The Odin Project
+This is the Repo for Project Oop with The Odin Project
