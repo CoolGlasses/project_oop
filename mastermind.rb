@@ -94,15 +94,19 @@ class Player
         puts
         puts "Color1: "
         @guess[0] = gets.chomp
+        @guess[0].capitalize!
         puts
         puts "color2: "
         @guess[1] = gets.chomp
+        @guess[1].capitalize!
         puts
         puts "color3: "
         @guess[2] = gets.chomp
+        @guess[2].capitalize!
         puts
         puts "color4: "
         @guess[3] = gets.chomp
+        @guess[3].capitalize!
         
         return @guess
     end
