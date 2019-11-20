@@ -1,3 +1,5 @@
+require "byebug"
+
 class Mastermind
     def initialize
         @player = Player.new()
@@ -9,36 +11,39 @@ class Mastermind
         @board.print_board 
     end
 
-    def feedback(guess, secret_code, tries_left = 12)
+    def feedback(guess, secret_code)
         colors_correct = 0
         positions_correct = 0
 
         guess.each_with_index do |color, i|
-            if secret_code[i] = color
+            if secret_code[i] == color
                 colors_correct += 1
                 positions_correct += 1
             elsif secret_code.include?(color)
                 colors_correct += 1
             end
         end
-        
-        if tries_left == 12
-            puts "You have no Feedback yet!"
-        else
-            puts "You got #{colors_correct} of the correct Colors!"
+
+            puts
+            puts "You got #{colors_correct} of the correct Colors."
+            puts
             puts "AND"
-            puts "You got #{positions_correct} of those colors in the correct Position!"
-        end
+            puts
+            puts "You got #{positions_correct} of those colors in the correct Position."
+            puts
+
     end
     
     def gameOver(guess, secret_code, tries_left = 1)
         if guess == secret_code
-            puts "You WIN!  You're a Mastermind!"
+            puts "You WIN #{@player.name}!  You're a Mastermind!"
         elsif tries_left == 0
-            puts "Gameover!  You lose!"
+            puts
+            puts "Gameover!  You lose #{@player.name}!"
+            puts
             feedback(guess, secret_code)
             puts
-            puts "BUT! My Secret Code was: #{@board.board}"
+            puts "My Secret Code was: #{@board.board}"
         else
             false
         end
@@ -46,28 +51,32 @@ class Mastermind
 
     def play 
         tries_left = 12
+        puts
         puts "I have my secret code! Think you can guess what it is?"
         
 
         while tries_left > 0
+
+            puts
             puts @board.print_potential_colors
             puts
             puts "You have #{tries_left} guesses remaining.  Whats my code?"
             puts
-            
-            if !gameOver(@player.guess, @board.board, tries_left)
-                puts "That isn't exactly correct!"
-                feedback(@player.guess, @board.board, tries_left)
-            else
-                gameOver(@player.guess, @board.board, tries_left)
-            end
+            puts @board.hidden_board
+            puts
 
             tries_left -=1
+            guess = @player.guess()
+            
+            if gameOver(guess, @board.board, tries_left) == false
+                puts
+                puts "That isn't exactly correct!"
+                feedback(guess, @board.board)
+                puts
+            end  
         end    
     end
 end
-
-
 
 class Player
     def initialize
@@ -82,7 +91,6 @@ class Player
 
     def guess
         @guess = ["color1", "color2", "color3", "color4"]
-        puts guess
         puts
         puts "Color1: "
         @guess[0] = gets.chomp
@@ -123,7 +131,10 @@ class Board
         @board
     end
 
-
+    def hidden_board
+        @hidden_board = [ "color1", "color2", "color3", "color4" ]
+        print @hidden_board
+    end
 end
 
 Mastermind.new()
