@@ -31,7 +31,7 @@ class Mastermind
             puts
             puts "You got #{positions_correct} of those colors in the correct Position."
             puts
-
+        return [colors_correct, positions_correct]
     end
     
     def gameOver(guess, secret_code, tries_left = 1)
@@ -138,6 +138,56 @@ class Board
     def hidden_board
         @hidden_board = [ "color1", "color2", "color3", "color4" ]
         print @hidden_board
+    end
+end
+
+
+class ComputerPlayer
+    def initialize
+        @history = Hash.new(0)
+    end
+
+    def guess(feedback_array=nil)
+        #Array arrives with [ Colors Correct, Positions Correct] data
+        @potential_colors = ["Red", "Blue", "Green", "Yellow", "Purple", "Orange"]
+
+        if feedback_array == nil
+            @color1 = "Red"
+            @color2 = "Blue"
+            @color3 = "Green"
+            @color4 = "Yellow"
+            @guess = [ @color1, @color2, @color3, @color4 ]
+        else
+            case feedback_array[0]
+                when 1
+                when 2
+                when 3
+                when 4
+                else
+            end
+
+            case feedback_array[1]
+                when 1
+                when 2
+                when 3
+                else
+            end
+        
+        end
+
+        #need to pass guess to gameOver?
+    end
+
+    def game_history(guess, feedback_array)
+        @history[guess] = feedback_array
+        return @history
+    end    
+
+
+
+
+
+        return @guess
     end
 end
 
